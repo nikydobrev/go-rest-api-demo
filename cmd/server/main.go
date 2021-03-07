@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/nikydobrev/go-rest-api-demo/internal/database"
 	transportHTTP "github.com/nikydobrev/go-rest-api-demo/internal/transport/http"
 )
 
@@ -14,6 +15,13 @@ type App struct{}
 // Run - handles the startup of our application
 func (a *App) Run() error {
 	fmt.Println("Setting Up Our App")
+
+	var err error
+	db, err := database.NewDatabase()
+	if err != nil {
+		return err
+	}
+	fmt.Println(db.DB())
 
 	handler := transportHTTP.NewHandler()
 	handler.SetupRoutes()
