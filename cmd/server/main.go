@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/nikydobrev/go-rest-api-demo/internal/comment"
 	"github.com/nikydobrev/go-rest-api-demo/internal/database"
 	transportHTTP "github.com/nikydobrev/go-rest-api-demo/internal/transport/http"
 )
@@ -21,9 +22,9 @@ func (a *App) Run() error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(db.DB())
+	commentService := comment.NewService(db)
 
-	handler := transportHTTP.NewHandler()
+	handler := transportHTTP.NewHandler(commentService)
 	handler.SetupRoutes()
 	if err := http.ListenAndServe(":8080", handler.Router); err != nil {
 		fmt.Println("Failed to set up server")
