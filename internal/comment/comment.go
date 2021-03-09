@@ -19,7 +19,7 @@ type CommentService interface {
 	GetAllComments() ([]Comment, error)
 }
 
-// Comment -
+// Comment - defines our structure
 type Comment struct {
 	gorm.Model
 	Slug   string

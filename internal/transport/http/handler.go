@@ -27,8 +27,8 @@ func (h *Handler) SetupRoutes() {
 	fmt.Println("Setting Up Routes")
 	h.Router = mux.NewRouter()
 
-	h.Router.HandleFunc("/api/comment/", h.GetAllComments).Methods("GET")
-	h.Router.HandleFunc("/api/comment/", h.PostComment).Methods("POST")
+	h.Router.HandleFunc("/api/comment", h.GetAllComments).Methods("GET")
+	h.Router.HandleFunc("/api/comment", h.PostComment).Methods("POST")
 	h.Router.HandleFunc("/api/comment/{id}", h.GetComment).Methods("GET")
 	h.Router.HandleFunc("/api/comment/{id}", h.UpdateComment).Methods("PUT")
 	h.Router.HandleFunc("/api/comment/{id}", h.DeleteComment).Methods("DELETE")
