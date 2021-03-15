@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"os"
 
+	log "github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 // NewDatabase - returns a pointer to a new database conneciton
 func NewDatabase() (*gorm.DB, error) {
-	fmt.Println("Setting Up Database")
+	log.Info("Setting Up Database")
 
 	dbUserName := os.Getenv("DB_USERNAME")
 	dbPassword := os.Getenv("DB_PASSWORD")
