@@ -7,6 +7,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/nikydobrev/go-rest-api-demo/internal/comment"
+	log "github.com/sirupsen/logrus"
 )
 
 // GetComment - retrive comment by ID
@@ -28,7 +29,8 @@ func (h *Handler) GetComment(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := json.NewEncoder(w).Encode(comment); err != nil {
-		panic(err)
+		log.Error(err)
+		return
 	}
 }
 
@@ -43,7 +45,8 @@ func (h *Handler) GetAllComments(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := json.NewEncoder(w).Encode(comments); err != nil {
-		panic(err)
+		log.Error(err)
+		return
 	}
 }
 
@@ -62,7 +65,8 @@ func (h *Handler) PostComment(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := json.NewEncoder(w).Encode(comment); err != nil {
-		panic(err)
+		log.Error(err)
+		return
 	}
 }
 
@@ -91,7 +95,8 @@ func (h *Handler) UpdateComment(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := json.NewEncoder(w).Encode(updatedComment); err != nil {
-		panic(err)
+		log.Error(err)
+		return
 	}
 }
 
@@ -113,13 +118,15 @@ func (h *Handler) DeleteComment(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := json.NewEncoder(w).Encode(Response{Message: "Successfully Deleted"}); err != nil {
-		panic(err)
+		log.Error(err)
+		return
 	}
 }
 
 func sendErrorResponse(w http.ResponseWriter, message string, err error) {
 	w.WriteHeader(http.StatusInternalServerError)
 	if err := json.NewEncoder(w).Encode(Response{Message: message, Error: err.Error()}); err != nil {
-		panic(err)
+		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+		log.Error(err)
 	}
 }
