@@ -81,13 +81,13 @@ func (h *Handler) SetupRoutes() {
 	h.Router.HandleFunc("/api/comment/{id}", JWTAuth(h.GetComment)).Methods("GET")
 	h.Router.HandleFunc("/api/comment/{id}", JWTAuth(h.UpdateComment)).Methods("PUT")
 	h.Router.HandleFunc("/api/comment/{id}", JWTAuth(h.DeleteComment)).Methods("DELETE")
-	h.Router.HandleFunc("/api/health", func(w http.ResponseWriter, r *http.Request) {
+	h.Router.HandleFunc("/api/health", JWTAuth(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(http.StatusOK)
 		if err := json.NewEncoder(w).Encode(Response{Message: "I am Alive"}); err != nil {
 			panic(err)
 		}
-	})
+	}))
 }
 
 // validateToken - validates an incoming jwt token
